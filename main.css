@@ -1,0 +1,21 @@
+body{
+
+}
+
+#start{
+  font-size: 50px;
+  float: left;
+}
+
+#break{
+  font-size: 50px;
+  text-align: right;
+}
+#reset{
+  font-size: 25px;
+  text-align: center;
+}
+#clock{
+  font-size: 100px;
+  text-align: center;
+}
