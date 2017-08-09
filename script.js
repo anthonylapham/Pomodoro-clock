@@ -1,8 +1,8 @@
 $(document).ready(function(){
-  // Will we have to round numbers for precision?
+
   var defaultWorkDurationMinute = 25;
   var defaultWorkDurationSecond = 0;
-  var defaultBreakDurationMinute = 05;
+  var defaultBreakDurationMinute = 5;
   var defaultBreakDurationSecond = 0;
 
   var workMinute = defaultWorkDurationMinute.toString();
@@ -29,7 +29,7 @@ $(document).ready(function(){
         defaultWorkDurationSecond = 0;
         clearInterval(workTimerId);
       }
-    }, 1000)
+    }, 1000);
   });
 
   $('#start-break').on('click', function() {
@@ -47,10 +47,14 @@ $(document).ready(function(){
       $('#clock').text(breakMinute + ':' + breakSecond)
 
       if(!defaultBreakDurationMinute && !defaultBreakDurationSecond){
-        defaultBreakDurationMinute = 05;
+        defaultBreakDurationMinute = 5;
         defaultBreakDurationSecond = 0;
         clearInterval(breakTimerId);
       }
     }, 1000);
-  })
+  });
+
+  $('#reset').on('click', function(){
+    $('#clock').text('0:00');
+  });
 });
