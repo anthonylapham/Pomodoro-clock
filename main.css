@@ -1,21 +1,27 @@
-body{
-
+body {
+  background-color: black;
 }
 
-#start{
+#start {
   font-size: 50px;
   float: left;
+  color: blue;
 }
 
-#break{
+#break {
   font-size: 50px;
   text-align: right;
+  color: blue;
 }
-#reset{
+
+#reset {
   font-size: 25px;
   text-align: center;
+  color: red;
 }
-#clock{
+
+#clock {
   font-size: 100px;
   text-align: center;
+  color: white;
 }
