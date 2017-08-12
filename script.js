@@ -13,7 +13,7 @@ $(document).ready(function() {
       return this.defaultWorkDurationSecond ? this.defaultWorkDurationSecond.toString() : '00'
     },
     breakMinute() {
-      return defaultBreakDurationMinute.toString()
+      return this.defaultBreakDurationMinute.toString()
     },
     breakSecond() {
       return this.defaultBreakDurationSecond ? this.defaultBreakDurationSecond.toString() : '00';
@@ -36,30 +36,27 @@ $(document).ready(function() {
       $('#clock').text(clock.workMinute() + ':' + clock.workSecond())
 
       if(!clock.defaultWorkDurationMinute && !clock.defaultWorkDurationSecond) {
-        clock.defaultWorkDurationMinute = 25;
-        clock.defaultWorkDurationSecond = 0;
         clearInterval(workTimerId);
       }
     }, 1000);
   });
 
   $('#start-break').on('click', function() {
-    $('#clock').text(breakMinute + ':' + breakSecond)
+    let clock = _.cloneDeep(DEFAULT_TIME_SETTINGS)
+
+    $('#clock').text(clock.breakMinute() + ':' + clock.breakSecond())
+
     var breakTimerId = setInterval(function() {
-      if(defaultBreakDurationSecond === 0){
-        defaultBreakDurationSecond = 59;
-        defaultBreakDurationMinute -= 1;
+      if(clock.defaultBreakDurationSecond === 0){
+        clock.defaultBreakDurationSecond = 59;
+        clock.defaultBreakDurationMinute -= 1;
       }
       else{
-        defaultBreakDurationSecond -= 1;
+        clock.defaultBreakDurationSecond -= 1;
       }
-      breakMinute = defaultBreakDurationSecond.toString();
-      breakSecond = defaultBreakDurationSecond ? defaultBreakDurationSecond.toString() : '00';
-      $('#clock').text(breakMinute + ':' + breakSecond)
+      $('#clock').text(clock.breakMinute() + ':' + clock.breakSecond())
 
-      if(!defaultBreakDurationMinute && !defaultBreakDurationSecond){
-        defaultBreakDurationMinute = 5;
-        defaultBreakDurationSecond = 0;
+      if(!clock.defaultBreakDurationMinute && !clock.defaultBreakDurationSecond){
         clearInterval(breakTimerId);
       }
     }, 1000);
