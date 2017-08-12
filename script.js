@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+  // Did the user select work or break timer?
+  let workTimerId = null
+  let breakTimerId = null
+  let mode = null
+
   // DEV NOTE: Using ES6 syntax, so use in a modern browser.
   const DEFAULT_TIME_SETTINGS = {
     defaultWorkDurationMinute: 25,
@@ -24,8 +29,13 @@ $(document).ready(function() {
     // Always start with a clean slate by recursively cloning the defaults
     let clock = _.cloneDeep(DEFAULT_TIME_SETTINGS)
 
+    // set the mode
+    mode = 'workTimer'
+
+    // display initial time
     $('#clock').text(clock.workMinute() + ':' + clock.workSecond())
-    var workTimerId = setInterval(function() {
+
+    workTimerId = setInterval(function() {
       if(clock.defaultWorkDurationSecond === 0) {
         clock.defaultWorkDurationSecond = 59;
         clock.defaultWorkDurationMinute -= 1;
@@ -42,11 +52,15 @@ $(document).ready(function() {
   });
 
   $('#start-break').on('click', function() {
+    // start with a clean state
     let clock = _.cloneDeep(DEFAULT_TIME_SETTINGS)
+
+    // set the mode
+    mode = 'breakTimer'
 
     $('#clock').text(clock.breakMinute() + ':' + clock.breakSecond())
 
-    var breakTimerId = setInterval(function() {
+    breakTimerId = setInterval(function() {
       if(clock.defaultBreakDurationSecond === 0){
         clock.defaultBreakDurationSecond = 59;
         clock.defaultBreakDurationMinute -= 1;
@@ -63,7 +77,15 @@ $(document).ready(function() {
   });
 
   $('#reset').on('click', function(){
-    // TODO: This only momentarily changes the text of the clock. Reset variables as well
+    // Clear the timeInterval by checking mode
+    if (mode === 'workTimer') {
+      clearInterval(workTimerId)
+    }
+    else if (mode === 'breakTimer') {
+      clearInterval(breakTimerId)
+    }
+
+    // reset the UI
     $('#clock').text('0:00');
   });
 
