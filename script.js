@@ -55,6 +55,8 @@ $(document).ready(function(){
   });
 
   $('#reset').on('click', function(){
+    // TODO: This only momentarily changes the text of the clock. Reset variables as well
     $('#clock').text('0:00');
   });
+
 });
