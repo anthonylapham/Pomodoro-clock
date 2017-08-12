@@ -1,32 +1,43 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
-  var defaultWorkDurationMinute = 25;
-  var defaultWorkDurationSecond = 0;
-  var defaultBreakDurationMinute = 5;
-  var defaultBreakDurationSecond = 0;
-
-  var workMinute = defaultWorkDurationMinute.toString();
-  var workSecond = defaultWorkDurationSecond ? defaultWorkDurationSecond.toString() : '00';
-  var breakMinute = defaultBreakDurationSecond.toString();
-  var breakSecond = defaultBreakDurationSecond ? defaultBreakDurationSecond.toString() : '00';
+  // DEV NOTE: Using ES6 syntax, so use in a modern browser.
+  const DEFAULT_TIME_SETTINGS = {
+    defaultWorkDurationMinute: 25,
+    defaultWorkDurationSecond: 0,
+    defaultBreakDurationMinute: 5,
+    defaultBreakDurationSecond: 0,
+    workMinute() {
+      return this.defaultWorkDurationMinute.toString()
+    },
+    workSecond() {
+      return this.defaultWorkDurationSecond ? this.defaultWorkDurationSecond.toString() : '00'
+    },
+    breakMinute() {
+      return defaultBreakDurationMinute.toString()
+    },
+    breakSecond() {
+      return this.defaultBreakDurationSecond ? this.defaultBreakDurationSecond.toString() : '00';
+    }
+  }
 
   $('#start-work').on('click', function() {
-    $('#clock').text(workMinute + ':' + workSecond)
+    // Always start with a clean slate by recursively cloning the defaults
+    let clock = _.cloneDeep(DEFAULT_TIME_SETTINGS)
+
+    $('#clock').text(clock.workMinute() + ':' + clock.workSecond())
     var workTimerId = setInterval(function() {
-      if(defaultWorkDurationSecond === 0) {
-        defaultWorkDurationSecond = 59;
-        defaultWorkDurationMinute -= 1;
+      if(clock.defaultWorkDurationSecond === 0) {
+        clock.defaultWorkDurationSecond = 59;
+        clock.defaultWorkDurationMinute -= 1;
       }
       else {
-        defaultWorkDurationSecond -= 1;
+        clock.defaultWorkDurationSecond -= 1;
       }
-      workMinute = defaultWorkDurationMinute.toString()
-      workSecond = defaultWorkDurationSecond ? defaultWorkDurationSecond.toString() : '00'
-      $('#clock').text(workMinute + ':' + workSecond)
+      $('#clock').text(clock.workMinute() + ':' + clock.workSecond())
 
-      if(!defaultWorkDurationMinute && !defaultWorkDurationSecond) {
-        defaultWorkDurationMinute = 25;
-        defaultWorkDurationSecond = 0;
+      if(!clock.defaultWorkDurationMinute && !clock.defaultWorkDurationSecond) {
+        clock.defaultWorkDurationMinute = 25;
+        clock.defaultWorkDurationSecond = 0;
         clearInterval(workTimerId);
       }
     }, 1000);
