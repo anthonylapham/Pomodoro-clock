@@ -121,7 +121,7 @@ $(document).ready(function() {
     hideButtons(true);
     $('#clock').text('0:00');
     $('#startMinute').text('25');//why doesn't this reset the span to 25
-    $('startBreak').text('5');//why doesn't this reset the span to 5
+    $('#startBreak').text('5');//why doesn't this reset the span to 5
     clearInterval(workTimerId);
     clearInterval(breakTimerId);
     defaultWorkDurationMinute = 25;
