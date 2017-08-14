@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
   var breakTimerId = null;
   var workTimerId = null;
@@ -15,7 +15,7 @@ $(document).ready(function(){
 
   $('#reset').hide()
 
-  function hideButtons(override = false){
+  function hideButtons(override = false) {
     override ? $('#start-break').show() : $('#start-break').hide();
     override ? $('#start-work').show() : $('#start-work').hide();
     override ? $('#increase-session').show() : $('#increase-session').hide();
@@ -25,7 +25,7 @@ $(document).ready(function(){
     override ? $('#reset').hide() : $('#reset').show();
   }
 
-  $('#increase-session').on('click', function(){
+  $('#increase-session').on('click', function() {
     defaultWorkDurationMinute++
     workMinute = defaultWorkDurationMinute.toString();
 
@@ -36,7 +36,7 @@ $(document).ready(function(){
     $('#startMinute').text(increaseMinute);
   });
 
-  $('#decrease-session').on('click', function(){
+  $('#decrease-session').on('click', function() {
     defaultWorkDurationMinute--
     workMinute = defaultWorkDurationMinute.toString();
 
@@ -47,7 +47,7 @@ $(document).ready(function(){
     $('#startMinute').text(decreaseMinute);
   });
 
-  $('#increase-break').on('click', function(){
+  $('#increase-break').on('click', function() {
     defaultBreakDurationMinute++
     breakMinute = defaultBreakDurationMinute.toString();
 
@@ -58,7 +58,7 @@ $(document).ready(function(){
     $('#startBreak').text(increaseBreak);
   });
 
-  $('#decrease-break').on('click', function(){
+  $('#decrease-break').on('click', function() {
     defaultBreakDurationMinute--
     breakMinute = defaultBreakDurationMinute.toString();
 
@@ -75,18 +75,17 @@ $(document).ready(function(){
     $('#clock').text(workMinute + ':' + workSecond)
 
     workTimerId = setInterval(function() {
-      if(defaultWorkDurationSecond === 0) {
+      if (defaultWorkDurationSecond === 0) {
         defaultWorkDurationSecond = 59;
         defaultWorkDurationMinute -= 1;
-      }
-      else {
+      } else {
         defaultWorkDurationSecond -= 1;
       }
       workMinute = defaultWorkDurationMinute.toString()
       workSecond = defaultWorkDurationSecond ? defaultWorkDurationSecond.toString() : '00'
       $('#clock').text(workMinute + ':' + workSecond)
 
-      if(!defaultWorkDurationMinute && !defaultWorkDurationSecond) {
+      if (!defaultWorkDurationMinute && !defaultWorkDurationSecond) {
         defaultWorkDurationMinute = 25;
         defaultWorkDurationSecond = 0;
         clearInterval(workTimerId);
@@ -100,18 +99,17 @@ $(document).ready(function(){
     $('#clock').text(breakMinute + ':' + breakSecond)
 
     breakTimerId = setInterval(function() {
-      if(defaultBreakDurationSecond === 0){
+      if (defaultBreakDurationSecond === 0) {
         defaultBreakDurationSecond = 59;
         defaultBreakDurationMinute -= 1;
-      }
-      else{
+      } else {
         defaultBreakDurationSecond -= 1;
       }
       breakMinute = defaultBreakDurationMinute.toString();
       breakSecond = defaultBreakDurationSecond ? defaultBreakDurationSecond.toString() : '00';
       $('#clock').text(breakMinute + ':' + breakSecond)
 
-      if(!defaultBreakDurationMinute && !defaultBreakDurationSecond){
+      if (!defaultBreakDurationMinute && !defaultBreakDurationSecond) {
         defaultBreakDurationMinute = 5;
         defaultBreakDurationSecond = 0;
         clearInterval(breakTimerId);
@@ -119,9 +117,11 @@ $(document).ready(function(){
     }, 1000);
   });
 
-  $('#reset').on('click', function(e){
+  $('#reset').on('click', function() {
     hideButtons(true);
     $('#clock').text('0:00');
+    $('#startMinute').text('25');//why doesn't this reset the span to 25
+    $('startBreak').text('5');//why doesn't this reset the span to 5
     clearInterval(workTimerId);
     clearInterval(breakTimerId);
     defaultWorkDurationMinute = 25;
