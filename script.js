@@ -13,7 +13,7 @@ $(document).ready(function() {
   var breakMinute = defaultBreakDurationMinute.toString();
   var breakSecond = defaultBreakDurationSecond ? defaultBreakDurationSecond.toString() : '00';
 
-  $('#reset').hide()
+  $('#reset').hide()//hides the reset button on page load
 
   function hideButtons(override = false) {
     override ? $('#start-break').show() : $('#start-break').hide();
@@ -24,7 +24,8 @@ $(document).ready(function() {
     override ? $('#decrease-break').show() : $('#decrease-break').hide();
     override ? $('#reset').hide() : $('#reset').show();
   }
-
+  //function ensures that if the timer is active, only the reset button is visible
+  //if timer is inactive then all buttons except the reset are visible
   $('#increase-session').on('click', function() {
     defaultWorkDurationMinute++
     workMinute = defaultWorkDurationMinute.toString();
@@ -35,7 +36,7 @@ $(document).ready(function() {
     increaseMinute.toString()
     $('#startMinute').text(increaseMinute);
   });
-
+  //increments the work timer
   $('#decrease-session').on('click', function() {
     defaultWorkDurationMinute--
     workMinute = defaultWorkDurationMinute.toString();
@@ -46,7 +47,7 @@ $(document).ready(function() {
     decreaseMinute.toString();
     $('#startMinute').text(decreaseMinute);
   });
-
+  //decrements the work timer
   $('#increase-break').on('click', function() {
     defaultBreakDurationMinute++
     breakMinute = defaultBreakDurationMinute.toString();
@@ -57,7 +58,7 @@ $(document).ready(function() {
     increaseBreak.toString();
     $('#startBreak').text(increaseBreak);
   });
-
+  //increments the break timer
   $('#decrease-break').on('click', function() {
     defaultBreakDurationMinute--
     breakMinute = defaultBreakDurationMinute.toString();
@@ -68,7 +69,7 @@ $(document).ready(function() {
     decreaseBreak.toString();
     $('#startBreak').text(decreaseBreak);
   });
-
+  //decrements the break timer
   $('#start-work').on('click', function() {
     hideButtons();
 
@@ -92,7 +93,7 @@ $(document).ready(function() {
       }
     }, 1000);
   });
-
+  //starts the 25 minute timer
   $('#start-break').on('click', function() {
     hideButtons();
 
@@ -116,12 +117,12 @@ $(document).ready(function() {
       }
     }, 1000);
   });
-
+  //starts the 5 minute timer
   $('#reset').on('click', function() {
     hideButtons(true);
     $('#clock').text('0:00');
-    $('#startMinute').text('25');//why doesn't this reset the span to 25
-    $('#startBreak').text('5');//why doesn't this reset the span to 5
+    $('#startMinute').text('25');
+    $('#startBreak').text('5');
     clearInterval(workTimerId);
     clearInterval(breakTimerId);
     defaultWorkDurationMinute = 25;
@@ -135,4 +136,5 @@ $(document).ready(function() {
 
 
   });
+  //returns everything to intial settings
 });
